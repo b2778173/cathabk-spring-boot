@@ -1,19 +1,27 @@
 package com.example.demo.controller;
 
+import com.example.demo.mapper.BpiMapper;
 import com.example.demo.model.Bpi;
 import com.example.demo.service.BIPService;
 import com.example.demo.service.CoinDeskService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.Before;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
+import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.mybatis.spring.boot.test.autoconfigure.AutoConfigureMybatis;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MockMvcBuilder;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import tk.mybatis.spring.annotation.MapperScan;
 
@@ -27,11 +35,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@RunWith(SpringRunner.class)
-@WebMvcTest(value = BIPController.class)
+@ExtendWith(SpringExtension.class)
+@WebMvcTest(controllers = BIPController.class)
 @AutoConfigureMybatis
 @MapperScan(basePackages = "com.example.demo.mapper")
 class BIPControllerTest {
+    @Autowired
+    private WebApplicationContext wac;
     @Autowired
     private MockMvc mvc;
 
@@ -40,14 +50,16 @@ class BIPControllerTest {
 
     @MockBean
     private BIPService bipService;
+
+
     @MockBean
     private CoinDeskService coinDeskService;
 
 
-//    @Before
-//    public void init() {
-//        MockitoAnnotations.initMocks(this);
-//    }
+    @Before
+    public void init() {
+        mvc = MockMvcBuilders.webAppContextSetup(wac).build();
+    }
 
     @Test
     public void givenListOfBpi_whenGetAllBpi_thenReturnBpiList() throws Exception {
@@ -73,7 +85,7 @@ class BIPControllerTest {
                         .rateFloat(BigDecimal.valueOf(41967.25))
                         .build()
         );
-        given(bipService.getAll(Bpi.builder().build())).willReturn(list);
+//        given(bipService.getAll(Bpi.builder().build())).willReturn(list);
 
         // then - verify the output
         mvc.perform(get("/bpi/getAll")).andExpect(status().isOk())
@@ -117,14 +129,16 @@ class BIPControllerTest {
 
     @Test
     void save() throws Exception {
-        this.mvc.perform(
+        mvc.perform(
                         post("/bpi/save")
+                                .contentType(MediaType.APPLICATION_JSON)
                                 .param("name", "美元")
                                 .param("code", "USD")
                                 .param("symbol", "&#36;")
                                 .param("rate", "45,088.402")
                                 .param("description", "United States Dollar")
                                 .param("rateFloat", "45088.4019")
+
                 )
                 .andDo(print())
                 .andExpect(status().isOk());
@@ -132,13 +146,15 @@ class BIPControllerTest {
 
     @Test
     void getCoinDesk() throws Exception {
-        mvc.perform(get("/bpi/getCoinDesk}")).andExpect(status().isOk())
+        mvc.perform(get("/bpi/getCoinDesk}"))
+                .andExpect(status().isOk())
                 .andDo(print());
     }
 
     @Test
     void getBipDesk() throws Exception {
-        mvc.perform(get("/bpi/getCoinDesk")).andExpect(status().isOk())
+        mvc.perform(get("/bpi/getCoinDesk"))
+                .andExpect(status().isOk())
                 .andDo(print());
     }
 }
