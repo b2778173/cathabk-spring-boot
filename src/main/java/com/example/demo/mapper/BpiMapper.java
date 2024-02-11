@@ -32,12 +32,12 @@ import org.apache.ibatis.annotations.*;
 public interface BpiMapper extends MyMapper<Bpi> {
 
     @Insert("insert into BPI (NAME, CODE, SYMBOL, RATE, DESCRIPTION, RATE_FLOAT) VALUES (#{name}, #{code}, #{symbol}, #{rate}, #{description}, #{rateFloat})")
-    public int create(Bpi emp);
+    public int add(Bpi emp);
 
     @Select("select * from Bpi where code = #{code}")
     Bpi findByCode(@Param("code") String code);
 
 
     @Delete("delete from BPI where ID=#{id} ")
-    public boolean deleteOne(@Param("id") Integer id);
+    public boolean remove(@Param("id") Integer id);
 }

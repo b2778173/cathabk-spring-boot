@@ -57,14 +57,14 @@ public class BIPServiceImpl implements BIPService {
     }
 
     public void deleteById(Integer id) {
-        bpiMapper.deleteOne(id);
+        bpiMapper.remove(id);
     }
 
     public void save(Bpi bpi) {
         if (bpi.getId() != null) {
             bpiMapper.updateByPrimaryKey(bpi);
         } else {
-            bpiMapper.create(bpi);
+            bpiMapper.add(bpi);
         }
     }
 }

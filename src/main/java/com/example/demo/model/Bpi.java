@@ -25,8 +25,10 @@
 package com.example.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
@@ -35,6 +37,8 @@ import java.math.BigDecimal;
  * @since 2016-01-22 22:16
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class Bpi extends BaseEntity {
     private String name;
@@ -48,4 +52,5 @@ public class Bpi extends BaseEntity {
     private String description;
 
     private BigDecimal rateFloat;
+
 }

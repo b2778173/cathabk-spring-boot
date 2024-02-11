@@ -66,7 +66,7 @@ public class BIPController {
         return bpiService.getById(id);
     }
 
-    @RequestMapping(value = "/delete/{id}")
+    @DeleteMapping(value = "/delete/{id}")
     public ModelMap delete(@PathVariable Integer id) {
         ModelMap result = new ModelMap();
         bpiService.deleteById(id);
