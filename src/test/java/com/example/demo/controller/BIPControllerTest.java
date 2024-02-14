@@ -91,10 +91,6 @@ class BIPControllerTest {
     }
 
     @Test
-    public void test() {
-        System.out.println(bipMapper.findByCode("USD").getName());
-    }
-    @Test
     public void givenListOfBpi_whenGetAllBpi_thenReturnBpiList() throws Exception {
         // given - precondition or setup
         given(bipService.getAll(Bpi.builder().build())).willReturn(list);
@@ -136,7 +132,7 @@ class BIPControllerTest {
     }
 
     @Test
-    void delete() throws Exception {
+    void givenId_whenDeleteBpiById_thenReturnDeleteId() throws Exception {
         Integer id = 1;
 
         given(bipService.deleteById(id)).willReturn(id);
@@ -149,7 +145,7 @@ class BIPControllerTest {
     }
 
     @Test
-    void save() throws Exception {
+    void givenBpi_whenInsertBpi_thenReturnObjId() throws Exception {
         Bpi bpi = Bpi.builder()
                 .name("美元")
                 .symbol("&#36;")
@@ -173,7 +169,7 @@ class BIPControllerTest {
     }
 
     @Test
-    void getCoinDesk() throws Exception {
+    void givenUrl_whenFetchCoinDesk_thenReturnData() throws Exception {
 
         String jsonStr = "{\"time\":{\"updated\":\"2024/02/14  10:08:46\",\"updatedISO\":\"2024-02-14T22:08:46.909\",\"updateduk\":\"2024/02/14  02:08:46\"},\"disclaimer\":\"This data was produced from the CoinDesk Bitcoin Price Index (USD). Non-USD currency data converted using hourly conversion rate from openexchangerates.org\",\"chartName\":\"Bitcoin\",\"bpi\":{\"GBP\":{\"id\":2,\"page\":1,\"rows\":10,\"name\":\"英鎊\",\"code\":\"GBP\",\"symbol\":\"&pound;\",\"rate\":\"35,840.185\",\"description\":\"British Pound Sterling\",\"rateFloat\":41967.25}}}";
 
@@ -189,7 +185,7 @@ class BIPControllerTest {
     }
 
     @Test
-    void getBipDesk() throws Exception {
+    void givenUrl_whenFetchBpiDesk_thenReturnData() throws Exception {
         String jsonStr = "{\"time\":{\"updated\":\"2024/02/14  10:08:46\",\"updatedISO\":\"2024-02-14T22:08:46.909\",\"updateduk\":\"2024/02/14  02:08:46\"},\"disclaimer\":\"This data was produced from the CoinDesk Bitcoin Price Index (USD). Non-USD currency data converted using hourly conversion rate from openexchangerates.org\",\"chartName\":\"Bitcoin\",\"bpi\":{\"GBP\":{\"id\":2,\"page\":1,\"rows\":10,\"name\":\"英鎊\",\"code\":\"GBP\",\"symbol\":\"&pound;\",\"rate\":\"35,840.185\",\"description\":\"British Pound Sterling\",\"rateFloat\":41967.25}}}";
 
         CoinDeskRep res = objectMapper.readValue(jsonStr, CoinDeskRep.class);
