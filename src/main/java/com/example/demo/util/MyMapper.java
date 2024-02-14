@@ -24,8 +24,9 @@
 
 package com.example.demo.util;
 
-import tk.mybatis.mapper.common.BaseMapper;
-import tk.mybatis.mapper.common.Mapper;
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.mapper.Mapper;
 
 /**
  * 继承自己的MyMapper

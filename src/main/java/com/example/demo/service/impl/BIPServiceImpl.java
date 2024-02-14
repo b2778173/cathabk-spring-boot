@@ -44,11 +44,11 @@ public class BIPServiceImpl implements BIPService {
         if (bpi.getPage() != null && bpi.getRows() != null) {
             PageHelper.startPage(bpi.getPage(), bpi.getRows());
         }
-        return bpiMapper.selectAll();
+        return bpiMapper.selectList(null);
     }
 
     public Bpi getById(Integer id) {
-        return bpiMapper.selectByPrimaryKey(id);
+        return bpiMapper.selectById(id);
     }
 
     @Override
@@ -56,15 +56,15 @@ public class BIPServiceImpl implements BIPService {
         return bpiMapper.findByCode(symbol);
     }
 
-    public void deleteById(Integer id) {
-        bpiMapper.remove(id);
+    public int deleteById(Integer id) {
+       return bpiMapper.deleteById(id);
     }
 
-    public void save(Bpi bpi) {
+    public int save(Bpi bpi) {
         if (bpi.getId() != null) {
-            bpiMapper.updateByPrimaryKey(bpi);
+            return bpiMapper.updateById(bpi);
         } else {
-            bpiMapper.add(bpi);
+            return bpiMapper.insert(bpi);
         }
     }
 }

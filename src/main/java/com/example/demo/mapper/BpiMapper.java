@@ -38,6 +38,6 @@ public interface BpiMapper extends MyMapper<Bpi> {
     Bpi findByCode(@Param("code") String code);
 
 
-    @Delete("delete from BPI where ID=#{id} ")
+    @Delete("delete from BPI where ID=#{id}")
     public boolean remove(@Param("id") Integer id);
 }

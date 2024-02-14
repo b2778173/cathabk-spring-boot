@@ -61,16 +61,23 @@ public class BIPController {
     }
 
 
-    @RequestMapping(value = "/get/{id}")
-    public Bpi findById(@PathVariable Integer id) {
-        return bpiService.getById(id);
+    @RequestMapping(value = "/get/{code}")
+    public Bpi findById(@PathVariable String code) {
+        return bpiService.findByCode(code);
     }
 
     @DeleteMapping(value = "/delete/{id}")
     public ModelMap delete(@PathVariable Integer id) {
         ModelMap result = new ModelMap();
-        bpiService.deleteById(id);
-        result.put("msg", "删除成功!");
+        String msg = "";
+        int deleteId = bpiService.deleteById(id);
+        if(deleteId==0){
+            msg = "資料無異動";
+        }else{
+            msg = "删除成功!";
+        }
+        result.put("msg", msg);
+        result.put("id", deleteId);
         return result;
     }
 
@@ -83,8 +90,9 @@ public class BIPController {
             return result;
         }
         String msg = bpi.getId() == null ? "insert success!" : "insert fail!";
-        bpiService.save(bpi);
+        int id = bpiService.save(bpi);
         result.put("msg", msg);
+        result.put("id", id);
         return result;
     }
 

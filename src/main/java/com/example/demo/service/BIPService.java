@@ -15,7 +15,7 @@ public interface BIPService {
 
     public Bpi findByCode(String symbol);
 
-    public void deleteById(Integer id);
+    public int deleteById(Integer id);
 
-    public void save(Bpi bpi);
+    public int save(Bpi bpi);
 }
