@@ -70,14 +70,14 @@ public class BIPController {
     public ModelMap delete(@PathVariable Integer id) {
         ModelMap result = new ModelMap();
         String msg = "";
-        int deleteId = bpiService.deleteById(id);
-        if(deleteId==0){
+        int deleteRow = bpiService.deleteById(id);
+        if(deleteRow==0){
             msg = "資料無異動";
         }else{
             msg = "删除成功!";
         }
         result.put("msg", msg);
-        result.put("id", deleteId);
+        result.put("deleteRow", deleteRow);
         return result;
     }
 
@@ -90,9 +90,9 @@ public class BIPController {
             return result;
         }
         String msg = bpi.getId() == null ? "insert success!" : "insert fail!";
-        int id = bpiService.save(bpi);
+        int insertRow = bpiService.save(bpi);
         result.put("msg", msg);
-        result.put("id", id);
+        result.put("insertRow", insertRow);
         return result;
     }
 

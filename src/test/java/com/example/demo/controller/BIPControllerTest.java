@@ -141,7 +141,7 @@ class BIPControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andReturn();
-        System.out.println("insert id:" + result.getResponse().getContentAsString());
+        System.out.println("delete row:" + result.getResponse().getContentAsString());
     }
 
     @Test
@@ -165,7 +165,7 @@ class BIPControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andReturn();
-        System.out.println("insert id:" + result.getResponse().getContentAsString());
+        System.out.println("insert row:" + result.getResponse().getContentAsString());
     }
 
     @Test
